@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const { hotelRouter } = require('./routers/hotels.router');
 const { categoriesRouter } = require('./routers/categories.router');
 const { default: mongoose } = require('mongoose');
@@ -13,6 +14,7 @@ connectDB();
 const app = express();
 const PORT = 4000;
 
+app.use(cors());
 app.get("/", (req,res)=>{
     res.send("hello geeks!!");
 })
@@ -31,6 +33,6 @@ app.use("/api/wishlist", wishlistRouter);
 mongoose.connection.once("open",()=>{
     console.log("connection established");
     app.listen(process.env.PORT|| 4000, ()=>{
-        console.log("server started")
+        console.log("server started", process.env.PORT||4000 )
     })
 })
